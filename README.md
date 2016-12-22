@@ -9,6 +9,7 @@ A facebook photo frame app for Resin.io. Tested with:
 
 - Set up your device and screen
 - Create a facebook app, add the 'facebook login' product, and enable 'Login from devices'
+    * Unless you want to go through Facebook review, you will need to add every prospective user of your device as an admin, tester or developer (under 'Roles')
 - Sign up on [resin.io](https://dashboard.resin.io/signup), create an application for your device, and provision it
 - Set the following environmental variables:
     * RESIN_HOST_CONFIG_gpu_mem: 120 // Sets the GPU memory for the device

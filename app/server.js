@@ -25,6 +25,7 @@ app.get('/get-fb-token', (req, res) => {
 app.post('/start-device-login', (req, res) => {
     const fbParams = new FormData();
     fbParams.append('access_token', FB_ACCESS_TOKEN);
+    fbParams.append('scope', 'public_profile,user_photos');
 
     fetch('https://graph.facebook.com/v2.6/device/login', {
         method: 'post',
