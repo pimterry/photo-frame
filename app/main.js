@@ -4,6 +4,7 @@
     const electron = require('electron');
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
+    const path = require('path');
 
     // simple parameters initialization
     let electronConfig = {
@@ -16,13 +17,12 @@
         "URL_LAUNCHER_HEIGHT": (process.env.URL_LAUNCHER_HEIGHT == null) ? 1080 : parseInt(process.env.URL_LAUNCHER_HEIGHT),
         "URL_LAUNCHER_TITLE": (process.env.URL_LAUNCHER_TITLE == null) ? "RESIN.IO" : process.env.URL_LAUNCHER_TITLE,
         "URL_LAUNCHER_CONSOLE": process.env.URL_LAUNCHER_CONSOLE == null ? 0 : process.env.URL_LAUNCHER_CONSOLE === '1',
-        "URL_LAUNCHER_URL": (process.env.URL_LAUNCHER_URL == null) ? "file:////usr/src/app/data/index.html" : process.env.URL_LAUNCHER_URL,
+        "URL_LAUNCHER_URL": (process.env.URL_LAUNCHER_URL == null) ? ("file://" + path.join(__dirname, "data/index.html")) : process.env.URL_LAUNCHER_URL,
         "URL_LAUNCHER_ZOOM": (process.env.URL_LAUNCHER_ZOOM == null) ? 1.0 : parseFloat(process.env.URL_LAUNCHER_ZOOM),
         "URL_LAUNCHER_OVERLAY_SCROLLBARS": process.env.URL_LAUNCHER_CONSOLE == null ? 0 : process.env.URL_LAUNCHER_CONSOLE === '1'
     };
 
     let window = null;
-
 
     // enable touch events if your device supports them
     if (electronConfig.URL_LAUNCHER_TOUCH) {

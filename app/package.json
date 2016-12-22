@@ -4,8 +4,9 @@
   "description": "electronJS-based resin application",
   "main": "main.js",
   "scripts": {
-    "start": "NODE_ENV=production startx ./node_modules/electron/dist/electron .",
-    "test": "NODE_ENV=development startx ./node_modules/electron/dist/electron ."
+    "dev": "electron .",
+    "start": "NODE_ENV=production startx electron .",
+    "test": "NODE_ENV=development startx electron ."
   },
   "repository": {
     "type": "git",
