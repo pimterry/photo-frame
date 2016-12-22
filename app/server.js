@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
+const FormData = require('form-data');
 const express = require('express');
 const app = express();
 
@@ -10,6 +12,7 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'data/index.html'));
 })
 
+const FB_ACCESS_TOKEN = process.env.FB_APP_ID + "|" + process.env.FB_CLIENT_TOKEN;
 const TOKEN_FILE = process.env.TOKEN_FILE || "/data/fb-token";
 let token = fs.existsSync(TOKEN_FILE) ? fs.readFileSync(TOKEN_FILE, 'utf8') : null;
 
@@ -20,6 +23,22 @@ app.get('/get-fb-token', (req, res) => {
     } else {
         res.sendStatus(404);
     }
+});
+
+app.post('/start-device-login', (req, res) => {
+    const fbParams = new FormData();
+    fbParams.append('access_token', FB_ACCESS_TOKEN);
+
+    fetch('https://graph.facebook.com/v2.6/device/login', {
+        method: 'post',
+        body: fbParams
+    }).then((response) => response.json()).then((data) => {
+        res.set('content-type', 'application/json');
+        res.status(200).send(JSON.stringify(data));
+    }).catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+    });
 });
 
 app.post('/set-fb-token', (req, res) => {
