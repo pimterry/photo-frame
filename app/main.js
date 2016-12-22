@@ -1,6 +1,6 @@
 'use strict';
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 const PORT = 8080
 
@@ -26,3 +26,5 @@ app.on('ready', () => {
         window.loadURL(`http://localhost:${PORT}/`);
     });
 });
+
+ipcMain.addListener('log', (event, ...args) => console.log(...args));

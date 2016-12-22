@@ -4,8 +4,8 @@
   "description": "electronJS-based resin application",
   "main": "main.js",
   "scripts": {
-    "dev": "URL_LAUNCHER_CONSOLE=1 electron .",
-    "start": "NODE_ENV=production startx electron ."
+    "dev": "TOKEN_FILE=/tmp/fb-token URL_LAUNCHER_CONSOLE=1 electron .",
+    "start": "NODE_ENV=production electron . --enable-logging"
   },
   "repository": {
     "type": "git",
