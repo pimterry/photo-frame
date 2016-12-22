@@ -73,14 +73,15 @@ module.exports = class DeviceLogin extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <div>Starting Facebook login process...</div>
+            return <div>Starting login process...</div>
         } else if (this.error) {
             return <div className="error">{ this.error }</div>
         } else if (this.state.userCode) {
-            return (<div>
-                Welcome to your photo frame!<br/>
-                To set up, open "{ this.state.verificationUri }", log into your
-                facebook, and enter the below code:
+            return (<div className="login-info">
+                <h1>Welcome to your photo frame!</h1>
+                <p>
+                To set up, open "{ this.state.verificationUri }", and enter:
+                </p>
                 <div className="device-code">
                     { this.state.userCode }
                 </div>

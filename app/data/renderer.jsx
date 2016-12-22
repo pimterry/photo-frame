@@ -29,7 +29,7 @@ class PhotoFrame extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <div>Loading...</div>;
+            return <div>Starting up...</div>;
         } else if (this.state.token) {
             return <RandomFbPhotos token={ this.state.token } />
         } else {
