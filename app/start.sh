@@ -8,5 +8,5 @@
 while true; do
     rm /tmp/.X0-lock &>/dev/null || true
     cd /usr/src/app
-    npm run start
+    startx /usr/local/bin/npm run start
 done
