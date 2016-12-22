@@ -33,7 +33,7 @@ class PhotoFrame extends React.Component {
         } else if (this.state.token) {
             return <RandomFbPhotos token={ this.state.token } />
         } else {
-            return <DeviceLogin onTokenAcquired={ this.onTokenAcquired } />
+            return <DeviceLogin onTokenAcquired={ this.onTokenAcquired.bind(this) } />
         }
     }
 }
