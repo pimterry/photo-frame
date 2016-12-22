@@ -12,11 +12,19 @@ class PhotoFrame extends React.Component {
             loading: true,
         };
 
-        api.getToken().then((fbToken) => {
+        api.getToken().then((token) => {
             this.setState({
                 loading: false,
-                token: fbToken || null
+                token: token || null
             });
+        });
+    }
+
+    onTokenAcquired(token) {
+        api.setToken(token);
+        this.setState({
+            loading: false,
+            token: token
         });
     }
 
@@ -26,7 +34,7 @@ class PhotoFrame extends React.Component {
         } else if (this.state.token) {
             return (<div>Token: { this.state.token }</div>);
         } else {
-            return <DeviceLogin onTokenAcquired={ (token) => this.setState({ token }) } />
+            return <DeviceLogin onTokenAcquired={ this.onTokenAcquired } />
         }
     }
 }

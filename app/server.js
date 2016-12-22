@@ -38,6 +38,23 @@ app.post('/start-device-login', (req, res) => {
     });
 });
 
+app.post('/check-device-login-status', (req, res) => {
+    const fbParams = new FormData();
+    fbParams.append('access_token', FB_ACCESS_TOKEN);
+    fbParams.append('code', req.body.code);
+
+    fetch('https://graph.facebook.com/v2.6/device/login_status', {
+        method: 'post',
+        body: fbParams
+    }).then((response) => response.json()).then((data) => {
+        res.set('content-type', 'application/json');
+        res.status(200).send(JSON.stringify(data));
+    }).catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
 app.post('/set-fb-token', (req, res) => {
     let newToken = req.body.token;
     if (newToken) {
