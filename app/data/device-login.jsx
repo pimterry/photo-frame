@@ -9,8 +9,7 @@ class LoginTimeoutError extends Error {
 }
 
 module.exports = class DeviceLogin extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+    componentWillMount() {
         this.startLoginProcess();
     }
 

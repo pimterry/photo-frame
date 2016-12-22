@@ -3,11 +3,10 @@ const ReactDOM = require('react-dom');
 
 const api = require('./api');
 const DeviceLogin = require('./device-login');
+const RandomFbPhotos = require('./random-fb-photos');
 
 class PhotoFrame extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-
+    componentWillMount() {
         this.state = {
             loading: true,
         };
@@ -32,7 +31,7 @@ class PhotoFrame extends React.Component {
         if (this.state.loading) {
             return <div>Loading...</div>;
         } else if (this.state.token) {
-            return (<div>Token: { this.state.token }</div>);
+            return <RandomFbPhotos token={ this.state.token } />
         } else {
             return <DeviceLogin onTokenAcquired={ this.onTokenAcquired } />
         }
