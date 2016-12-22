@@ -2,15 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
+
 const express = require('express');
 const app = express();
 
 app.use(express.static('data'));
 app.use(require('body-parser').json());
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'data/index.html'));
-})
 
 const FB_ACCESS_TOKEN = process.env.FB_APP_ID + "|" + process.env.FB_CLIENT_TOKEN;
 const TOKEN_FILE = process.env.TOKEN_FILE || "/data/fb-token";

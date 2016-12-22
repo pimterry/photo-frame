@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path')
 const { app, BrowserWindow, ipcMain } = require('electron');
 
 const PORT = 8080
@@ -9,7 +10,7 @@ app.on('ready', () => {
         width: 800,
         height: 480,
         frame: false,
-        title: "Photo frame",
+        title: "Photo frame"
     });
 
     window.webContents.on('did-finish-load', () => {
@@ -23,7 +24,7 @@ app.on('ready', () => {
     }
 
     require('./server.js').start(PORT).then(() => {
-        window.loadURL(`http://localhost:${PORT}/`);
+        window.loadURL("file://" + path.join(__dirname, "data/index.html"));
     });
 });
 

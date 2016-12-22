@@ -23,7 +23,11 @@
     "electron-rebuild": "^1.2.1",
     "express": "^4.14.0",
     "form-data": "^2.1.2",
-    "node-fetch": "^1.6.3"
+    "node-fetch": "^1.6.3",
+    "node-jsx": "^0.13.3",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-tools": "^0.13.3"
   },
   "author": "Carlo Maria Curinga",
   "license": "Apache-2.0",

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <base href="http://localhost:8080" />
+    <meta charset="utf-8" />
     <title>Photo Frame</title>
-
-    <script src="api.js"></script>
-    <script src="renderer.js"></script>
   </head>
   <body>
+    <div id="reactRoot"></div>
+
+    <script>
+    require('node-jsx').install({extension: '.jsx'});
+    require('./renderer.jsx')
+    </script>
   </body>
 </html>
