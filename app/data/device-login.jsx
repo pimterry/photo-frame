@@ -13,7 +13,7 @@ module.exports = class DeviceLogin extends React.Component {
         this.startLoginProcess();
     }
 
-    startLoginProcess() {
+    async startLoginProcess() {
         this.state = {
             loading: true,
             userCode: null,
@@ -21,54 +21,55 @@ module.exports = class DeviceLogin extends React.Component {
             error: null
         };
 
-        api.startDeviceLogin().then((loginData) => {
+        try {
+            let loginData = await api.startDeviceLogin();
             this.setState({
                 loading: false,
                 userCode: loginData.user_code,
                 verificationUri: loginData.verification_uri
             });
 
-            return this.waitForLogin(loginData);
-        }).then((token) => {
+            let token = this.waitForLogin(loginData);
             this.props.onTokenAcquired(token);
-        }).catch((error) => {
+        } catch (error) {
             api.log(error.message);
             this.setState({ loading: false, error });
             setTimeout(() => this.startLoginProcess(), 5000);
-        });
+        };
     }
 
-    waitForLogin(loginData) {
+    async waitForLogin(loginData) {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                this.checkDeviceLoginStatus(loginData).then((token) => {
+            setTimeout(async () => {
+                try {
+                    let token = await this.checkDeviceLoginStatus(loginData);
                     if (token) {
                         resolve(token);
                     } else {
                         resolve(this.waitForLogin(loginData));
                     }
-                }).catch(reject);
+                } catch (e) { reject(e); }
             }, loginData.interval * 1000);
         });
     }
 
-    checkDeviceLoginStatus(loginData) {
-        return api.checkDeviceLoginStatus(loginData).then((result) => {
-            if (result.access_token) {
-                return result.access_token;
-            } else if (result.error) {
-                switch (result.error.code) {
-                    case 31: // Not yet confirmed
-                        return null;
-                    case 463: // Device code has timed out
-                        throw new LoginTimeoutError();
-                    default:
-                        throw new Error('Unknown device login error: ' + JSON.stringify(result));
-                }
-            } else {
-                throw new Error('Unknown device login status response: ' + JSON.stringify(result.error));
+    async checkDeviceLoginStatus(loginData) {
+        let result = await api.checkDeviceLoginStatus(loginData);
+        
+        if (result.access_token) {
+            return result.access_token;
+        } else if (result.error) {
+            switch (result.error.code) {
+                case 31: // Not yet confirmed
+                    return null;
+                case 463: // Device code has timed out
+                    throw new LoginTimeoutError();
+                default:
+                    throw new Error('Unknown device login error: ' + JSON.stringify(result));
             }
-        });
+        } else {
+            throw new Error('Unknown device login status response: ' + JSON.stringify(result.error));
+        }
     }
 
     render() {

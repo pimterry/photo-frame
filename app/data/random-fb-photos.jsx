@@ -40,12 +40,13 @@ module.exports = class RandomFbPhotos extends React.Component {
         return images;
     }
 
-    loadData(bareUrl) {
+    async loadData(bareUrl) {
         let parsedUrl = url.parse('https://graph.facebook.com/v2.8/' + bareUrl, true);
         parsedUrl.search = undefined;
         parsedUrl.query.access_token = this.props.token;
 
-        return fetch(url.format(parsedUrl)).then((response) => response.json());
+        let response = await fetch(url.format(parsedUrl));
+        return response.json();
     }
 
     async showImagesInTurn(images) {

@@ -6,16 +6,14 @@ const DeviceLogin = require('./device-login');
 const RandomFbPhotos = require('./random-fb-photos');
 
 class PhotoFrame extends React.Component {
-    componentWillMount() {
+    async componentWillMount() {
         this.state = {
             loading: true,
         };
 
-        api.getToken().then((token) => {
-            this.setState({
-                loading: false,
-                token: token || null
-            });
+        this.setState({
+            loading: false,
+            token: await api.getToken() || null
         });
     }
 
