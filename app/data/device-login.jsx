@@ -80,7 +80,7 @@ module.exports = class DeviceLogin extends React.Component {
             return (<div className="login-info">
                 <h1>Welcome to your photo frame!</h1>
                 <p>
-                To set up, open "{ this.state.verificationUri }", and enter:
+                To set up, open <span className='url'>{ this.state.verificationUri }</span>, and enter:
                 </p>
                 <div className="device-code">
                     { this.state.userCode }

@@ -1,15 +1,48 @@
+@font-face {
+    font-family: 'Lucida Grande';
+    src: url('webfont.woff') format('woff');
+}
+
 html, body {
     background-color: black;
     margin: 0;
     padding: 0;
     overflow: hidden;
 
+    font-family: 'Lucida Grande';
     color: white;
 }
 
-.random-fb-photo {
+.login-info, .random-fb-photo {
     width: 100vw;
     height: 100vh;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.login-info {
+    background-color: #3b5998;
+}
+
+.random-fb-photo {
     object-fit: contain;
+}
+
+h1 {
+    margin: 0;
+    font-size: 35pt;
+}
+
+.url {
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.device-code {
+    font-size: 30pt;
+    font-family: monospace;
 }
