@@ -1,6 +1,8 @@
 # Photo Frame
 
-A facebook photo frame app for Resin.io. Tested with:
+A facebook photo frame app, for Raspberry PI & Resin.io. You log into your facebook by entering the code shown on the frame into facebook.com/device, and it then shows random photos you've been tagged in, slowly changing, or moving on immediately if you tap.
+
+Tested with:
 
 * Raspberry Pi 3B
 * [Rpi 7" screen](https://shop.pimoroni.com/products/raspberry-pi-7-touchscreen-display-with-frame)
@@ -8,13 +10,13 @@ A facebook photo frame app for Resin.io. Tested with:
 ## Getting started
 
 - Set up your device and screen
+- Sign up on [resin.io](https://dashboard.resin.io/signup), create an application for your device, and provision it. You should see the Resin logo appear on your screen.
 - Create a facebook app, add the 'facebook login' product, and enable 'Login from devices'
-    * Unless you want to go through Facebook review, you will need to add every prospective user of your device as an admin, tester or developer (under 'Roles')
-- Sign up on [resin.io](https://dashboard.resin.io/signup), create an application for your device, and provision it
-- Set the following environmental variables:
+    * Unless you want to go through Facebook's app review process, you will need to add every prospective user of your device as an admin, tester or developer (under 'Roles')
+- Set the following environmental variables for your Resin application:
     * RESIN_HOST_CONFIG_gpu_mem: 120 // Sets the GPU memory for the device
     * RESIN_HOST_CONFIG_lcd_rotate: 2 // Rotates the screen 180 degrees
     * FB_APP_ID: [your facebook app id]
     * FB_CLIENT_TOKEN: [your facebook client token]
 - Push the contents of this repo to your Resin.io application
-- Once the device updates, it should follow the [device flow](https://developers.facebook.com/docs/facebook-login/for-devices) to log into Facebook, and start showing your photos
+- Once the device updates, it will walk you through the [device flow](https://developers.facebook.com/docs/facebook-login/for-devices) to get photo access to your Facebook account, and then start showing your photos.
