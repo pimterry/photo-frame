@@ -3,8 +3,6 @@ const React = require('react');
 const Tappable = require('react-tappable');
 const _ = require('lodash');
 
-const ROTATION_FREQUENCY=10000;
-
 module.exports = class RandomFbPhotos extends React.Component {
     componentWillMount() {
         this.state = {
@@ -41,7 +39,7 @@ module.exports = class RandomFbPhotos extends React.Component {
 
     repeatedlyLoadRandomImage(images) {
         this.loadRandomImage(images).then(() => Promise.race([
-            new Promise((resolve) => setTimeout(resolve, 10000)),
+            new Promise((resolve) => setTimeout(resolve, 20000)),
             new Promise((resolve) => this.nextImageTrigger = resolve)
         ])).then(() => this.repeatedlyLoadRandomImage(images));
     }
