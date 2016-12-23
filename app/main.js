@@ -28,4 +28,5 @@ app.on('ready', () => {
     });
 });
 
+app.commandLine.appendSwitch('touch-events', 'enabled');
 ipcMain.addListener('log', (event, ...args) => console.log(...args));
