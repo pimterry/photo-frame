@@ -32,7 +32,7 @@ module.exports = class DeviceLogin extends React.Component {
         }).then((token) => {
             this.props.onTokenAcquired(token);
         }).catch((error) => {
-            api.log(error);
+            api.log(error.message);
             this.setState({ loading: false, error });
             setTimeout(() => this.startLoginProcess(), 5000);
         });
@@ -75,7 +75,7 @@ module.exports = class DeviceLogin extends React.Component {
         if (this.state.loading) {
             return <div>Starting login process...</div>
         } else if (this.error) {
-            return <div className="error">{ this.error }</div>
+            return <div className="error">{ this.error.message }</div>
         } else if (this.state.userCode) {
             return (<div className="login-info">
                 <h1>Welcome to your photo frame!</h1>
