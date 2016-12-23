@@ -1,6 +1,6 @@
 # Photo Frame
 
-A facebook photo frame app, for Raspberry PI & Resin.io. You log into your facebook by entering the code shown on the frame into facebook.com/device, and it then shows random photos you've been tagged in, slowly changing, or moving on immediately if you tap.
+A facebook photo frame app, for Raspberry PI & Resin.io. You log into your facebook by entering the code shown on the frame into facebook.com/device, and it then shows random photos you've been tagged in or have uploaded, slowly changing, or moving on immediately if you tap.
 
 Tested with:
 

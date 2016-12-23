@@ -109,3 +109,6 @@ Temporary Items
 
 # Secrets
 app/dev.env
+
+# App-specific resin sync config
+.resin-sync.yml
