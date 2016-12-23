@@ -5,34 +5,39 @@ const api = require('./api');
 const _ = require('lodash');
 
 module.exports = class RandomFbPhotos extends React.Component {
-    componentWillMount() {
+    async componentWillMount() {
         this.state = {
             loading: true,
             imageUrl: null
         };
 
-        // TODO: Refresh 'all' images occasionally
-        this.getAllImages()
-            .then((images) => this.repeatedlyLoadRandomImage(images))
-            .catch((error) => api.log(error.message, error.stack));
+        while (true) {
+            try {
+                let images = await this.getAllImages();
+                await this.showImagesInTurn(_.shuffle(images));
+            } catch (e) { api.log(e.message, e.stack); }
+        }
     }
 
-    getAllImages() {
-        return Promise.all([
-            this.getImagesStartingAt('me/photos/tagged?limit=1000000000'),
-            this.getImagesStartingAt('me/photos/uploaded?limit=10000000')
-        ]).then((images) => _(images).flatten().uniqBy('id').valueOf());
+    async getAllImages() {
+        let images = await Promise.all([
+            this.getImagesFromSet('me/photos/tagged?limit=1000000000'),
+            this.getImagesFromSet('me/photos/uploaded?limit=10000000')
+        ]);
+
+        return _(images).flatten().uniqBy('id').valueOf();
     }
 
-    getImagesStartingAt(imagesUrl) {
-        return this.loadData(imagesUrl).then((results) => {
-            if (results.next) {
-                return this.getImagesStartingAt(results.next)
-                           .then((images) => results.data.concat(images));
-            } else {
-                return results.data;
-            }
-        });
+    async getImagesFromSet(imagesUrl) {
+        let images = [];
+
+        while (imagesUrl) {
+            let results = await this.loadData(imagesUrl);
+            images = images.concat(results.data);
+            imagesUrl = results.next;
+        }
+
+        return images;
     }
 
     loadData(bareUrl) {
@@ -43,11 +48,15 @@ module.exports = class RandomFbPhotos extends React.Component {
         return fetch(url.format(parsedUrl)).then((response) => response.json());
     }
 
-    repeatedlyLoadRandomImage(images) {
-        this.loadRandomImage(images).then(() => Promise.race([
-            new Promise((resolve) => setTimeout(resolve, 20000)),
-            new Promise((resolve) => this.nextImageTrigger = resolve)
-        ])).then(() => this.repeatedlyLoadRandomImage(images));
+    async showImagesInTurn(images) {
+        while (images.length > 0) {
+            await this.loadImage(images.pop());
+
+            await Promise.race([
+                new Promise((resolve) => setTimeout(resolve, 20000)),
+                new Promise((resolve) => this.nextImageTrigger = resolve)
+            ]);
+        }
     }
 
     jumpToNextImage() {
@@ -56,14 +65,13 @@ module.exports = class RandomFbPhotos extends React.Component {
         }
     }
 
-    loadRandomImage(images) {
-        let imageMetadata = _.sample(images);
+    async loadImage(imageMetadata) {
+        let result = await this.loadData(`${imageMetadata.id}?fields=images`)
 
-        return this.loadData(`${imageMetadata.id}?fields=images`)
-            .then((result) => this.setState({
-                loading: false,
-                imageUrl: _(result.images).maxBy((image) => image.height).source
-            }));
+        this.setState({
+            loading: false,
+            imageUrl: _(result.images).maxBy((image) => image.height).source
+        });
     }
 
     render() {
