@@ -70,7 +70,7 @@ app.post('/set-fb-token', (req, res) => {
 exports.start = function (port) {
     return new Promise((resolve, reject) => {
         app.listen(port, function () {
-            console.log('Example app listening on port ' + port);
+            console.log('Server listening on port ' + port);
             resolve();
         });
     });
