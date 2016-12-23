@@ -10,7 +10,15 @@
     <div id="reactRoot"></div>
 
     <script>
-      require('node-jsx').install({extension: '.jsx'});
+      require('babel-register')({
+        presets: [
+          'react'
+        ],
+        plugins: [
+          'syntax-async-functions',
+          'transform-async-to-generator'
+        ]
+      });
       require('./renderer.jsx')
     </script>
   </body>
