@@ -1,5 +1,6 @@
 const url = require('url');
 const React = require('react');
+const Tappable = require('react-tappable');
 const _ = require('lodash');
 
 const ROTATION_FREQUENCY=10000;
@@ -39,24 +40,35 @@ module.exports = class RandomFbPhotos extends React.Component {
     }
 
     repeatedlyLoadRandomImage(images) {
-        return this.loadRandomImage(images).then(() => setTimeout(() => this.repeatedlyLoadRandomImage(images), 10000));
+        this.loadRandomImage(images).then(() => Promise.race([
+            new Promise((resolve) => setTimeout(resolve, 10000)),
+            new Promise((resolve) => this.nextImageTrigger = resolve)
+        ])).then(() => this.repeatedlyLoadRandomImage(images));
+    }
+
+    jumpToNextImage() {
+        if (this.nextImageTrigger) {
+            this.nextImageTrigger();
+        }
     }
 
     loadRandomImage(images) {
         let imageMetadata = _.sample(images);
 
         return this.loadData(`https://graph.facebook.com/v2.8/${imageMetadata.id}?fields=images`)
-                   .then((result) => this.setState({
-                       loading: false,
-                       imageUrl: _(result.images).maxBy((image) => image.height).source
-                   }));
+            .then((result) => this.setState({
+                loading: false,
+                imageUrl: _(result.images).maxBy((image) => image.height).source
+            }));
     }
 
     render() {
         if (this.state.loading) {
             return <div>Loading image...</div>;
         } else if (this.state.imageUrl) {
-            return <img src={this.state.imageUrl} className='random-fb-photo' />;
+            return (<Tappable onTap={ this.jumpToNextImage.bind(this) }>
+                <img src={this.state.imageUrl} className='random-fb-photo' />
+            </Tappable>);
         }
     }
 }
