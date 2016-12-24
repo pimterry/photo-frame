@@ -13,7 +13,7 @@ class PhotoFrame extends React.Component {
 
         this.setState({
             loading: false,
-            token: await api.getToken() || null
+            token: (await api.getToken()) || null
         });
     }
 

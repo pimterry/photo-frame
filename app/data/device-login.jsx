@@ -29,7 +29,7 @@ module.exports = class DeviceLogin extends React.Component {
                 verificationUri: loginData.verification_uri
             });
 
-            let token = this.waitForLogin(loginData);
+            let token = await this.waitForLogin(loginData);
             this.props.onTokenAcquired(token);
         } catch (error) {
             api.log(error.message);
