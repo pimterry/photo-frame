@@ -77,7 +77,7 @@ module.exports = class RandomFbPhotos extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <div>Loading image...</div>;
+            return <img src='loading.gif'></img>;
         } else if (this.state.imageUrl) {
             return (<Tappable onTap={ this.jumpToNextImage.bind(this) }>
                 <img src={this.state.imageUrl} className='random-fb-photo' />

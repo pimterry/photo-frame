@@ -74,7 +74,7 @@ module.exports = class DeviceLogin extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <div>Starting login process...</div>
+            return <img src='loading.gif'></img>;
         } else if (this.error) {
             return <div className="error">{ this.error.message }</div>
         } else if (this.state.userCode) {

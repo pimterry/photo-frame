@@ -11,6 +11,11 @@ html, body {
 
     font-family: 'Lucida Grande';
     color: white;
+
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-info, .random-fb-photo {
