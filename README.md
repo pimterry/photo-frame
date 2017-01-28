@@ -2,7 +2,7 @@
 
 This is the complete setup for a facebook photo frame app, for Raspberry PI + Resin.io.
 
-It gets every photo you've ever uploaded or been tagged in on Facebook, shuffles them, rotates through one every 30 seconds (or jumps to the next if you tap the screen), and updates the list when it gets to the end.
+It gets every photo you've ever uploaded or been tagged in on Facebook, shuffles them, rotates through one every 30 seconds (or you can swipe left and right between them), and updates the list when it gets to the end.
 
 Logs into facebook with device flow: shows a code on the frame, enter it into facebook.com/device and it'll be magically authenticated, super easy to use.
 
