@@ -1,6 +1,6 @@
 const url = require('url');
 const React = require('react');
-const Tappable = require('react-tappable');
+const Swipeable = require('react-swipeable');
 const api = require('./api');
 const _ = require('lodash');
 
@@ -50,19 +50,30 @@ module.exports = class RandomFbPhotos extends React.Component {
     }
 
     async showImagesInTurn(images) {
-        while (images.length > 0) {
-            await this.loadImage(images.pop());
+        let index = 0;
+        const next = () => index = index + 1;
+        const prev = () => index = Math.max(0, index - 1);
+
+        while (index < images.length) {
+            await this.loadImage(images[index]);
 
             await Promise.race([
-                new Promise((resolve) => setTimeout(resolve, 20000)),
-                new Promise((resolve) => this.nextImageTrigger = resolve)
-            ]);
+                new Promise((resolve) => setTimeout(resolve, 20000)).then(() => next),
+                new Promise((resolve) => this.nextImageTrigger = resolve).then(() => next),
+                new Promise((resolve) => this.prevImageTrigger = resolve).then(() => prev)
+            ]).then((action) => action());
         }
     }
 
     jumpToNextImage() {
         if (this.nextImageTrigger) {
             this.nextImageTrigger();
+        }
+    }
+
+    jumpToPrevImage() {
+        if (this.prevImageTrigger) {
+            this.prevImageTrigger();
         }
     }
 
@@ -79,9 +90,12 @@ module.exports = class RandomFbPhotos extends React.Component {
         if (this.state.loading) {
             return <img src='loading.gif'></img>;
         } else if (this.state.imageUrl) {
-            return (<Tappable onTap={ this.jumpToNextImage.bind(this) }>
+            return (<Swipeable
+            onTap={ this.jumpToNextImage.bind(this) }
+            onSwipedLeft={ this.jumpToNextImage.bind(this) }
+            onSwipedRight={ this.jumpToPrevImage.bind(this) }>
                 <img src={this.state.imageUrl} className='random-fb-photo' />
-            </Tappable>);
+            </Swipeable>);
         }
     }
 }
