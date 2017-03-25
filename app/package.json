@@ -29,9 +29,11 @@
     "form-data": "^2.1.2",
     "lodash": "^4.17.2",
     "node-fetch": "^1.6.3",
+    "pi-pins": "^1.0.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-swipeable": "^3.9.1"
+    "react-swipeable": "^3.9.1",
+    "rpi-backlight": "^0.1.0"
   },
   "author": "Carlo Maria Curinga",
   "license": "Apache-2.0",
