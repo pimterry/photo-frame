@@ -4,7 +4,7 @@ const activateMotionSensor = require('./motion-sensor');
 const path = require('path')
 const { app, BrowserWindow, ipcMain } = require('electron');
 
-const PID_PIN = 7;
+const PIR_PIN = 7;
 const PORT = 8080;
 
 app.on('ready', () => {
@@ -29,7 +29,7 @@ app.on('ready', () => {
         window.loadURL("file://" + path.join(__dirname, "data/index.html"));
     });
 
-    activateMotionSensor(PID_PIN);
+    activateMotionSensor(PIR_PIN);
 });
 
 app.commandLine.appendSwitch('touch-events', 'enabled');

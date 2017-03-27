@@ -7,15 +7,15 @@ module.exports = function enableMotionSensor(pin) {
         return;
     }
 
-    var pidSensor = pins.connect(pin);
-    pidSensor.mode('in')
+    var pirSensor = pins.connect(pin);
+    pirSensor.mode('in')
 
-    pidSensor.on('rise', () => {
+    pirSensor.on('rise', () => {
         console.log('Motion detected');
         backlight.powerOn();
     });
 
-    pidSensor.on('fall', () => {
+    pirSensor.on('fall', () => {
         console.log('Motion lost');
         backlight.powerOff();
     });
