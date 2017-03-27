@@ -6,14 +6,19 @@ It gets every photo you've ever uploaded or been tagged in on Facebook, shuffles
 
 Logs into facebook with device flow: shows a code on the frame, enter it into facebook.com/device and it'll be magically authenticated, super easy to use.
 
+Also supports optional automatic backlight control, with a PIR motion sensor.
+
 Tested with:
 
 * Raspberry Pi 3B
 * [Rpi 7" screen](https://shop.pimoroni.com/products/raspberry-pi-7-touchscreen-display-with-frame)
+* [HC-SR501 infrared motion sensor](https://www.modmypi.com/electronics/sensors/pir-infrared-motion-sensor-hc-sr501-) (optional)
 
 ## Getting started
 
 - Set up your device and screen
+    * To add the motion sensor attach the 5V and GND pins, then connect the sensor output to **gpio pin 7** (physical pin 26) on your pi.
+    * Sensitivity and delay are controllable on the sensor itself.
 - Sign up for free on [resin.io](https://dashboard.resin.io/signup), create an application for your device, and provision it. You should see the Resin logo and boot sequence on your screen.
 - Create a facebook app, add the 'facebook login' product, and enable 'Login from devices'
     * Unless you want to go through Facebook's app review process, you'll need to add every prospective user of your device as an admin, tester or developer (under 'Roles')
