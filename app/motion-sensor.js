@@ -12,11 +12,13 @@ module.exports = function enableMotionSensor(pin) {
 
     pirSensor.on('rise', () => {
         console.log('Motion detected');
-        backlight.powerOn();
+
+        backlight.setBrightness(100);
     });
 
     pirSensor.on('fall', () => {
         console.log('Motion lost');
-        backlight.powerOff();
+
+        backlight.setBrightness(0);
     });
 }
