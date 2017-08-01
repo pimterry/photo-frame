@@ -5,8 +5,8 @@
 # the syntax below starts an X istance with ONLY our electronJS fired up,
 # it saves you a LOT of resources avoiding full-desktops envs
 
-while true; do
-    rm /tmp/.X0-lock &>/dev/null || true
-    cd /usr/src/app
-    startx /usr/local/bin/npm run start
-done
+ldconfig -v
+
+rm /tmp/.X0-lock &>/dev/null || true
+cd /usr/src/app
+startx /usr/local/bin/npm run start
