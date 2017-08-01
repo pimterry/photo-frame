@@ -4,7 +4,7 @@
   "description": "electronJS-based resin application",
   "main": "main.js",
   "scripts": {
-    "dev": "source dev.env && electron .",
+    "dev": ". ./dev.env && electron .",
     "start": "NODE_ENV=production electron . --enable-logging"
   },
   "repository": {
