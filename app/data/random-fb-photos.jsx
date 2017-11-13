@@ -4,6 +4,8 @@ const Swipeable = require('react-swipeable');
 const api = require('./api');
 const _ = require('lodash');
 
+const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
 module.exports = class RandomFbPhotos extends React.Component {
     async componentWillMount() {
         this.state = {
@@ -15,7 +17,11 @@ module.exports = class RandomFbPhotos extends React.Component {
             try {
                 let images = await this.getAllImages();
                 await this.showImagesInTurn(_.shuffle(images));
-            } catch (e) { api.log(e.message, e.stack); }
+            } catch (e) {
+              api.log(e.message, e.stack);
+              // Add a 5 second delay before retrying
+              await delay(5000);
+            }
         }
     }
 
@@ -37,6 +43,8 @@ module.exports = class RandomFbPhotos extends React.Component {
             imagesUrl = results.next;
         }
 
+        console.log(`Loaded ${images.length} images`);
+
         return images;
     }
 
@@ -55,10 +63,12 @@ module.exports = class RandomFbPhotos extends React.Component {
         const prev = () => index = Math.max(0, index - 1);
 
         while (index < images.length) {
+            if (images[index] === undefined) console.log('Undefined image!', index, images);
+
             await this.loadImage(images[index]);
 
             await Promise.race([
-                new Promise((resolve) => setTimeout(resolve, 20000)).then(() => next),
+                delay(20000).then(() => next),
                 new Promise((resolve) => this.nextImageTrigger = resolve).then(() => next),
                 new Promise((resolve) => this.prevImageTrigger = resolve).then(() => prev)
             ]).then((action) => action());
