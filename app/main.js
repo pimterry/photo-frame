@@ -29,7 +29,9 @@ app.on('ready', () => {
         window.loadURL("file://" + path.join(__dirname, "data/index.html"));
     });
 
-    activateMotionSensor(PIR_PIN);
+    if (process.env.ENABLE_MOTION_SENSOR) {
+      activateMotionSensor(PIR_PIN);
+    }
 });
 
 app.commandLine.appendSwitch('touch-events', 'enabled');

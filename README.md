@@ -27,6 +27,7 @@ Tested with:
     * RESIN_HOST_CONFIG_lcd_rotate: 2 // Rotates the screen 180 degrees
     * FB_APP_ID: [your facebook app id]
     * FB_CLIENT_TOKEN: [your facebook client token]
+    * ENABLE_MOTION_SENSOR: true // Optional: reads motion activity from gpio pin 7, if set
 - Push the contents of this repo to your Resin.io application
 - Once the device updates, it will walk you through the [device flow](https://developers.facebook.com/docs/facebook-login/for-devices) to get photo access to your Facebook account, and then start showing your photos.
 
