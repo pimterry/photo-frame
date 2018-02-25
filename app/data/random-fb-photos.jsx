@@ -54,6 +54,7 @@ module.exports = class RandomFbPhotos extends React.Component {
         parsedUrl.query.access_token = this.props.token;
 
         let response = await fetch(url.format(parsedUrl));
+        console.log('Loaded data', response);
         return response.json();
     }
 
