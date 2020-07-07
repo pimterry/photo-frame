@@ -23,7 +23,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.18.0",
     "body-parser": "^1.15.2",
-    "electron": "^1.4.15",
+    "electron": "^9.1.0",
     "electron-rebuild": "^1.5.7",
     "express": "^4.14.0",
     "form-data": "^2.1.2",
